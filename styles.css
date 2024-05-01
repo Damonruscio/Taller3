@@ -1,32 +1,14 @@
 /* Estilos para el navbar */
 .navbar {
-    background-color: #007bff; /* Cambia el color de fondo del navbar */
-  }
-  
-  .navbar-logo {
-    color: #fff; /* Cambia el color del texto del logo */
-  }
-  
-  .navbar-toggler {
-    color: #fff; /* Cambia el color del icono del botón de menú */
-  }
-  
-  /* Estilos para el formulario de búsqueda */
-  .form-control {
-    border-color: #fff; /* Cambia el color del borde del input de búsqueda */
-    color: #000; /* Cambia el color del texto del input de búsqueda */
-  }
-  
-  .btn-outline-success {
-    color: #fff; /* Cambia el color del texto del botón de búsqueda */
-  }
-  
-  /* Estilos para los enlaces adicionales */
-  .container {
-    padding-top: 10px; /* Ajusta el espacio superior del contenedor */
-  }
-  
-  .list-inline-item a {
-    color: #000; /* Cambia el color del texto de los enlaces adicionales */
-  }
-  
+  background-color: #c9d6c1; /* Color de fondo gris claro */
+}
+
+/* Estilos para el texto del navbar */
+.navbar-nav .nav-link {
+  color: black; /* Color del texto negro */
+  font-size: 25px;
+}
+
+.navbar-brand{
+  font-size: 25px;
+}

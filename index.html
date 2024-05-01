@@ -1,67 +1,63 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tu tienda en línea</title>
-  <!-- Agrega aquí tus enlaces a CSS -->
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <nav class="navbar navbar-expand-md bg">
-    <div class="container-fluid">
-      <!-- Logo -->
-      <a href="#" class="navbar-logo fs-3 ms-3">LOGO</a>
-      
-      <!-- Botón de menú -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <i class='bx bx-menu'></i>
-      </button>
-      
-      <!-- Contenido colapsable -->
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ms-auto">
-          <!-- Enlace de registro -->
-          <li class="nav-item">
-            <a href="Registro.php" class="nav-link mx-3">Registro</a>
-          </li>
-          <!-- Enlace de Mi carrito -->
-          <li class="nav-item">
-            <a href="MiCarrito.php" class="nav-link mx-3">Mi Carrito</a>
-          </li>
-        </ul>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tus Zapatos</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  </head>
+  <body>
+    
+    <nav class="py-3 navbar navbar-expand-md">
+      <div class="container">
+        <div class="logo ml-auto">
+          <a class="navbar-brand" href="#"><img src="estilos/img/TusZapatosIMG-m.png" alt=""></a>
+        </div>
+    
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-menu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="main-menu">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="active nav-link" href="#">Hombre</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Mujer</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Niño</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Niña</a></li>
+          </ul>
+        </div>
+    
+        <div class="d-none d-md-block ml-2">
+          <form class="d-flex" action="">
+            <input type="search" placeholder="Buscar" class="form-control d-flex">
+            <input type="submit" value="Buscar" class="btn btn-primary">
+          </form>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
+    
+    
+    
 
-  <!-- Barra de búsqueda -->
-  <form class="d-md-none d-flex justify-content-end mt-3 mx-3">
-    <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
-    <button class="btn btn-outline-success" type="submit">Buscar</button>
-  </form>
 
-  <!-- Enlaces adicionales -->
-  <div class="container mt-3">
-    <div class="row justify-content-end">
-      <div class="col-md-6 text-md-end">
-        <ul class="list-inline">
-          <li class="list-inline-item"><a href="Mujer.php" class="nav-link mx-3">Mujer</a></li>
-          <li class="list-inline-item"><a href="Hombre.php" class="nav-link mx-3">Hombre</a></li>
-          <li class="list-inline-item"><a href="Niña.php" class="nav-link mx-3">Niña</a></li>
-          <li class="list-inline-item"><a href="Niño.php" class="nav-link mx-3">Niño</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
 
-  <!-- Contenido adicional de tu página -->
-  <div class="container">
-    <h1>Bienvenido a tu tienda en línea</h1>
-    <!-- Agrega aquí el resto del contenido de tu página -->
-  </div>
 
-  <!-- Scripts de Bootstrap -->
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-</body>
+    <script src="js/fontawesome.min.js"></script>
+    <script src="js/brands.min.js"></script>
+    <script src="js/solid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+z7W5+g3u8y4+McurLWysqdDdq4M+76PVCmYlCc" crossorigin="anonymous"></script>
+
+<script>
+  $(document).ready(function(){
+    $(".navbar-toggler").click(function(){
+      $("#main-menu").collapse('toggle');
+    });
+  });
+</script>
+
+  </body>
 </html>
