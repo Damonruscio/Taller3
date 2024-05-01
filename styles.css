@@ -70,7 +70,7 @@
     background: url(/estilos/img/Jordan-shoes_1920x1080.jpg) no-repeat center;
     background-size: cover;
     width: 100%;
-    height: 100vh;
+
 }
 
 
@@ -191,3 +191,14 @@ form {
     color: #6c757d; /* Cambia el color del texto al pasar el mouse */
   }
   
+
+  .hero-section .container{
+    height: 100vh;
+    z-index: 1;
+    position: relative;
+  }
+
+  .text-h1{
+    color: #ad621bd7;
+    font-size: 60px;
+  }
