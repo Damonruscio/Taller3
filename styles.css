@@ -202,3 +202,14 @@ form {
     color: #ad621bd7;
     font-size: 60px;
   }
+
+  /* Estilos para el formulario de búsqueda */
+.form-buscar {
+    margin-right: 10px; /* Ajusta el margen derecho según sea necesario */
+  }
+  
+  /* Estilos para el enlace de login */
+  .login-button {
+    margin-left: 10px; /* Ajusta el margen izquierdo según sea necesario */
+  }
+  
