@@ -1,206 +1,148 @@
-/* Estilos para el navbar */
-.navbar {
-  background-color: #c9d6c1; /* Color de fondo gris claro */
-}
-
-/* Estilos para el texto del navbar */
-.navbar-nav .nav-link {
-  color: black; /* Color del texto negro */
-  font-size: 25px;
-}
-
 .navbar-brand{
-  font-size: 25px;
-}
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
-
-:root{
-    --green:hsl(162,45%,56%);
-    --lead:hsl(162,2%,56%);
-    --blue:hsl(220,85%,57%);
-    --violet:hsl(272,92%,32%);
-    --tex-white:hsl(0,0%,100%);
-    --text-light-grey:hsl(0,0%,98%);
-    --body-bg-color:hsl(238, 54%, 12%);
-    --glass-bg-color: hsla(0,0%,100%,0.05);
-    --border-color: hsla(0,0%,100%,0.25);
-    --blur: blur (10px);
-    --button-hover-color: hsla(0,0%,0%,0.3);
-}
-
-h3 {
-    font-size: 3rem;
-    color: var(--tex-white);
-}
-
-
-*{  
-    margin: 10;
-    padding: 22px 22px 22px 22px;
-    box-sizing: border-box;
-    border-radius:5px;
-}
-
-.was-validated{
-    display: block;
-    color:brown;
-}
-
-body{
-    background-color: var(--body-bg-color); 
-    color: var(--text-light-gray);
-    font-family: 'Poppins', sans-serif;
-    font-weight: 300;
-    font-size: 16px;
-    line-height:1.5;
-    overflow-x: hidden;
-
-}
-
-body::after,
-body::before {
-    content: '';
-    position: fixed;
-    height: 400px;
-    width: 400px;
-    border-radius: 50;
-    z-index: -1;
-    filter:blur(150px);
-    opacity: 0.5;
-}
-body::before {
-    background-color: var(--blue);
-    left: 0;
-    bottom: 0;
-    transform: translate(-50%);
-}
-    
-body::after {
-    background-color: var(--violet);
-    right:0;
-    top:0;
-    transform: translate(50%);
-}
-
-a{
-    text-decoration: none;
     font-weight: 500;
-    display: inline-block;
-    text-align: center;
+    color: #db7c23;
+    font-size: 24px;
+    transition: 0.3s color;
+}
+.login-button{
+    background-color:  #ec790e;
+    color: aliceblue;
+    font-size: 14px;
+    padding: 8px 20px;
+    border-radius:  50px;
+    text-decoration: none;
+    transition:  0.3s background-color;
 }
 
-.gradient-text{
-    background: linear-gradient(to right,var(--green),var(--lead));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+.login-button:hover{
+    background-color: #db7c23;
 }
+
+.navbar-toggler{
+    border: none;
+    font-size: 1.25rem;
+}
+.navbar-toggler:focus, .btn-close:focus{
+    outline:none;
+    box-shadow: none;
+
+}
+
+.nav-link{
+    color: #db7c23;
+    font-weight: 500;
+    position: relative;
+}
+
+.nav-link:hover, .nav-link.active{
+    color:black;
+}
+
+@media (min-width: 991px){
+
+.nav-link:before{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 2px;
+    background-color: #db7c23;
+    visibility: hidden;
+    transition: 0.3s ease-in-out;
+}
+
+.nav-link:hover::before, .nav-link.active::before{
+    width: 100%;
+    visibility: visible;
+}
+}
+
+
+
+
+
+
+
+
+/* Estilos para el formulario de registro */
 
 .form-main {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    padding: 0px 0px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
-.form-content{
-    width: 100%;
-    max-width: 450px;
-    position: relative;
-    z-index: 1;
-}
-
-.form-content .box{
-    border-color: var(--glass-bg-color);
-    border:2px solid var(--border-color);
-    padding: 40px 50px;
-    border-radius: 20px;
-    backdrop-filter: var(--blur);
-}
-
-.form-content .h3{
-    font-size: 28px;
-    text-align: center;
-    line-height: 1.2;
+    background-color: #f8f9fa; /* Color de fondo */
+    padding: 50px;
+  }
+  
+  .form-content {
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-content h3 {
+    color: #db7c23; /* Color de texto para los títulos */
+    font-size: 24px;
     font-weight: 500;
-}
-
-.form-content form{
-    margin: 25px 0 20px;
-}
-
-.form-content.input-box{
-    margin-bottom: 25px;
-}
-
-.form-content ::placeholder {
-    color: inherit;
-    opacity:1;
-}
-
-.form-content .input-control {
-    display:block;
-    height: 45;
+    margin-bottom: 20px;
+  }
+  
+  .input-box {
+    margin-bottom: 20px;
+  }
+  
+  .input-control {
     width: 100%;
-    background-color: transparent;
+    padding: 10px;
+    border: 1px solid #ced4da; /* Color del borde de los campos de entrada */
+    border-radius: 5px;
+  }
+  
+  .input-link a {
+    color: #db7c23; /* Color del enlace */
+    text-decoration: none;
+  }
+  
+  .input-link a:hover {
+    color: #ec790e; /* Color del enlace al pasar el mouse */
+  }
+  
+  .btn {
+    background-color: #ec790e; /* Color de fondo del botón */
+    color: #fff; /* Color del texto del botón */
+    font-size: 16px;
+    padding: 10px 20px;
     border: none;
-    border-bottom: 1px solid var(--border-color);
-    color: var(--tex-white);
-    font-weight: inherit;
-    font-family: inherit;
-    font-size: 16px;
-}
-
-.form-content .input-control:focus{
-    outline: none;
-}
-
-.form-content .input-link {
-    margin-top: 10px;
-    text-align: right;
-}
-     
-.form-content .btn {
-    height: 45px;
-    width: 100%;
-    padding: 0;
-    font-size: 16px;
-    font-weight: 500;
-    text-transform: capitalize;
-    text-align: center;
-    font-family: inherit;
+    border-radius: 50px;
     cursor: pointer;
-    border-radius: 25px;
-    user-select: none;
-    background: linear-gradient(to right,var(--green),var(--lead));
-    border:none;
-    color: var(--tex-white);
-    position: relative;
-    z-index: 1;
-}
-
-.form-content .btn::before{
-    content:"";
-    position: absolute;
-    left:0;
-    top:0;
-    height:100%;
-    width: 100%;
-    transition: background-color 0.5s ease;
-    z-index: 1;
-}
-
-.form-content .btn:hover::before{
-    background-color: var(--button-hover-color);
-}
-
-.form-content p{
-    text-align: center;
-    color: var(--tex-white);
-}
+    transition: 0.3s background-color;
+  }
+  
+  .btn:hover {
+    background-color: #db7c23; /* Color de fondo del botón al pasar el mouse */
+  }
+  
+  /* Estilos para el botón de retroceso */
+.back-link {
+    display: inline-block;
+    text-decoration: none;
+    color: #db7c23;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+  
+  .back-link i {
+    margin-right: 5px; /* Espacio entre el icono y el texto */
+  }
+  
+  .back-link:hover {
+    color: #ec790e; /* Cambio de color al pasar el mouse */
+  }
+  /* Estilos para los textos de placeholder */
+.input-control::placeholder {
+    color: #adb5bd; /* Color del texto de placeholder */
+  }
+  
+  
