@@ -67,7 +67,7 @@
 }
 
 .hero-section{
-    background: url(/estilos/img/Jordan-shoes_1920x1080.jpg) no-repeat center;
+    background: url(estilos/img/Jordan-shoes_1920x1080.jpg) no-repeat center;
     background-size: cover;
     width: 100%;
 
@@ -215,7 +215,7 @@ form {
   
   /*img de fondo */
 .hero-section {
-  background-image: url('Adidas-ZX-4000-4D-Torsion-I-Want-I-Can-EF9624.jpg'); /* Reemplaza 'ruta/a/tu/imagen.jpg' con la ruta de tu imagen de fondo */
+  background-image: url(estilos/img/Jordan-shoes_1920x1080.jpg); /* Reemplaza 'ruta/a/tu/imagen.jpg' con la ruta de tu imagen de fondo */
   background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo el contenedor */
   background-position: center; /* Centra la imagen */
   height: 100vh; /* Ajusta la altura al 100% del viewport */
@@ -232,4 +232,13 @@ form {
   color: #fdfdfd;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
   font-weight: bold; 
+}
+/* Estilos para el catalogo */
+
+.adidasracer  {
+  position: relative; /* Establece posición relativa */
+  top: -860px; /* Mueve el div 20px hacia arriba */
+  display: flex;
+  justify-content:right
+  
 }
