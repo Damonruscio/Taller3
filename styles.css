@@ -233,12 +233,3 @@ form {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
   font-weight: bold; 
 }
-/* Estilos para el catalogo */
-
-.adidasracer  {
-  position: relative; /* Establece posición relativa */
-  top: -860px; /* Mueve el div 20px hacia arriba */
-  display: flex;
-  justify-content:right
-  
-}
