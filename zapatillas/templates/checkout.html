@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+<!-- Navbar específico para checkout -->
+<nav class="navbar-co">
+    <div class="navbar-co-content">
+        <span class="navbar-brand">Carrito</span>
+        <span class="navbar-welcome">Hola, {{ user_name }}</span>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="checkout-container">
+    <!-- Sección de productos -->
+    <div class="checkout-products">
+        <h2>Resumen del Pedido</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Descripción</th>
+                    <th>Modelo</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in carrito %}
+                <tr class="product-item" data-product-id="{{ item.id }}">
+                    <td>{{ item.nombre }}</td>
+                    <td>{{ item.descripcion }}</td>
+                    <td>{{ item.modelo }}</td>
+                    <td>
+                        <div class="product-quantity">
+                            <button class="btn-decrease">-</button>
+                            <input type="number" class="quantity-input" value="{{ item.cantidad }}" min="1" readonly>
+                            <button class="btn-increase">+</button>
+                        </div>
+                    </td>
+                    <td>${{ item.precio }}</td>
+                    <td class="product-total">${{ item.precio * item.cantidad }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="checkout-total">
+            Total: ${{ total }}
+        </div>
+    </div>
+
+    <!-- Sección de medios de pago -->
+    <div class="checkout-payment">
+        <h2>Selecciona tu Medio de Pago</h2>
+        <button class="payment-button">Pagar con Mercado Pago</button>
+        <button class="payment-button">Pagar con Tarjeta</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Script para manejar la cantidad y actualización del total -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const btnIncreaseList = document.querySelectorAll('.btn-increase');
+        const btnDecreaseList = document.querySelectorAll('.btn-decrease');
+
+        btnIncreaseList.forEach(button => {
+            button.addEventListener('click', () => {
+                const quantityInput = button.parentElement.querySelector('.quantity-input');
+                const currentValue = parseInt(quantityInput.value, 10);
+                quantityInput.value = currentValue + 1;
+
+                updateTotal();
+            });
+        });
+
+        btnDecreaseList.forEach(button => {
+            button.addEventListener('click', () => {
+                const quantityInput = button.parentElement.querySelector('.quantity-input');
+                const currentValue = parseInt(quantityInput.value, 10);
+
+                if (currentValue > 1) {
+                    quantityInput.value = currentValue - 1;
+
+                    updateTotal();
+                }
+            });
+        });
+
+        // Función para actualizar el total
+        function updateTotal() {
+            let total = 0;
+
+            const productItems = document.querySelectorAll('.product-item');
+            productItems.forEach(item => {
+                const price = parseFloat(item.querySelector('td:nth-child(5)').textContent.replace('$', ''));
+                const quantity = parseInt(item.querySelector('.quantity-input').value, 10);
+                const productTotal = price * quantity;
+
+                // Actualiza el total del producto en la tabla
+                item.querySelector('.product-total').textContent = `$${productTotal.toFixed(2)}`;
+
+                total += productTotal;
+            });
+
+            // Actualiza el total general
+            document.querySelector('.checkout-total').textContent = `Total: $${total.toFixed(2)}`;
+        }
+    });
+</script>
+{% endblock %}

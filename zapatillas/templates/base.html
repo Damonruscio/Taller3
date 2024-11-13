@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    <title>Almacen de Calzado</title>
+</head>
+<body>
+    <!-- Banner de cuenta regresiva -->
+            <div id="banner-oferta" class="banner">
+                <p>
+                    🌟 <strong>Ofertas Temporada 2024</strong> hasta <strong>60% OFF</strong> 🌟
+                <span id="countdown"></span>
+                </p>
+            </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top navbar-main">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{url_for('index')}}">
+                <img src="/static/img/almacenDeCalzsado-nobg.png" alt="Logo" class="navbar-logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Productos
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ url_for('productos_categoria', categoria='Hombre') }}">Hombre</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('productos_categoria', categoria='Mujer') }}">Mujer</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('productos_categoria', categoria='Nino') }}">Niño</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('productos_categoria', categoria='Niña') }}">Niña</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{url_for('index')}}">Temporada</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Contacto</a>
+                    </li>
+                </ul>
+                
+                <div class="d-flex align-items-center">
+                    <a href="#" class="nav-link">
+                        <i class="bi bi-heart-fill text-danger" style="font-size: 1.5rem;"></i>
+                    </a>
+                    <a href="{{ url_for('ver_carrito') }}" class="nav-link ms-2">
+                        <i class="bi bi-cart-fill text-warning" style="font-size: 1.5rem;"></i>
+                    </a>
+                    {% if session.get('username') %}
+                        <span class="nav-link ms-2">Hola, {{ session['username'] }}</span>
+                        {% if session.get('is_admin') %}
+                            <a href="{{ url_for('dashboard') }}" class="nav-link ms-2">
+                                <i class="bi bi-house-door" style="font-size: 1.5rem;"></i> 
+                            </a>
+                        {% endif %}
+                        <a href="{{ url_for('logout') }}" class="nav-link ms-2">
+                            <i class="bi bi-box-arrow-right" style="font-size: 1.5rem;"></i> 
+                        </a>
+                    {% else %}
+                        <a href="{{url_for('login')}}" class="nav-link ms-2">
+                            <i class="bi bi-person-fill" style="font-size: 1.5rem;"></i>
+                        </a>
+                        <a href="{{ url_for('register') }}" class="nav-link ms-2">
+                            <i class="bi bi-person-plus-fill" style="font-size: 1.5rem;"></i> 
+                        </a>
+                    {% endif %}
+                </div>
+                <form class="d-flex mt-2 mt-lg-0 ms-lg-2" role="search" method="GET">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>                
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Carrusel -->
+    <div class="container-fluid p-0">
+        <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="/static/img/messi.jpg" class="d-block w-100 img-fluid" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="/static/img/nike1.jpg" class="d-block w-100 img-fluid" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="/static/img/nike2.jpg" class="d-block w-100 img-fluid" alt="...">
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+<!-- Este es el código común para todas las páginas de productos -->
+
+<hr>
+<div class="container mt-4">
+    {% block content %}
+    {% endblock %}
+</div>
+
+
+
+<hr>
+
+    <!-- Footer con el logo en móviles -->
+    <footer class="text-center mt-4">
+        <div class="footer-logo">
+            <img src="/static/img/almacenDeCalzsado-nobg.png" alt="Logo Footer" class="img-fluid" height="80" width="153">
+        </div>
+        <p>© 2024 Almacen de Calzado - Todos los derechos reservados</p>
+    </footer>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="alert-container">
+            {% for category, message in messages %}
+                {% if category == 'error' %}
+                    <div class="alert alert-danger rounded">
+                        {{ message }}
+                        <a href="{{ url_for('login') }}" class="btn btn-primary ms-3">Iniciar sesión</a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function toggleFavorito(productoId) {
+            fetch(`/add_favorito/${productoId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.success);
+                } else if (data.error) {
+                    alert(data.error);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+
+        }
+
+        // Cuenta regresiva
+        function iniciarCuentaRegresiva(fechaLimite) {
+            const countdownElement = document.getElementById('countdown');
+
+        function actualizarCuenta() {
+            const ahora = new Date().getTime();
+            const distancia = fechaLimite - ahora;
+
+            if (distancia <= 0) {
+                countdownElement.textContent = "¡Últimas horas!";
+                clearInterval(intervalo);
+            return;
+            }
+
+            const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+            const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+            countdownElement.textContent = `${dias}d ${horas}h ${minutos}m ${segundos}s`;
+        }
+
+        actualizarCuenta(); // Llama inmediatamente para evitar el retraso inicial
+            const intervalo = setInterval(actualizarCuenta, 1000);
+        }
+
+        // Define la fecha límite (por ejemplo, 31 de diciembre de 2024 a las 23:59:59)
+            const fechaLimite = new Date('2024-12-31T23:59:59').getTime();
+            iniciarCuentaRegresiva(fechaLimite);
+
+        
+    </script>
+</body>
+</html>

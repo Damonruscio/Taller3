@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block title %}Carrito de Compras{% endblock %}
+
+{% block content %}
+<div class="carrito-container">
+    <div class="carrito-box">
+        <h2>Resumen de tu Carrito</h2>
+        <!-- Tabla de productos -->
+        <table class="carrito-table">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Descripción</th>
+                    <th>Modelo</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Total</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in carrito %}
+                <tr class="product-item" data-product-id="{{ item['id'] }}">
+                    <td>{{ item['nombre'] }}</td>
+                    <td>{{ item['descripcion'] }}</td>
+                    <td>{{ item.get('modelo', 'Desconocido') }}</td>
+                    <td>
+                        <span>{{ item['cantidad'] }}</span>
+                    </td>
+                    <td>${{ item['precio'] }}</td>
+                    <td class="product-total">${{ item['precio'] * item['cantidad'] }}</td>
+                    <td>
+                        <button class="btn-delete">Eliminar</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Total -->
+        <div class="carrito-total">
+            <span><strong>Total: </strong>${{ total }}</span>
+        </div>
+    </div>
+
+    <div class="payment-methods">
+        <h2>Seleccioná tu método de pago</h2>
+    
+        <div class="payment-option">
+            <label for="mercado_pago" class="payment-label">
+                <input type="radio" name="pago" value="mercado_pago" id="mercado_pago">
+                <img src="/static/img/mplogo.png" alt="Mercado Pago" class="payment-logo">
+                
+            </label>
+        </div>
+        
+        <div class="payment-option">
+            <label for="tarjeta" class="payment-label">
+                <input type="radio" name="pago" value="tarjeta" id="tarjeta">
+                <img src="/static/img/tarjeta-bancaria.png" alt="Mercado Pago" class="payment-logo">
+                Tarjeta de Crédito/Débito(VISA/AMEX)
+            </label>
+        </div>
+    </div>
+    
+    <!-- Sección de botones y métodos de pago -->
+    <div class="payment-container">
+        <div class="action-buttons">
+            <a href="{{ url_for('index') }}" class="btn-add-more">Agregar más productos</a>
+            
+            <!-- Botón de proceder al pago -->
+            <button class="btn-pagar" id="btn-pagar">Proceder a pago</button>
+        </div>
+    </div>
+    
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Funcionalidad para eliminar producto
+        const btnDeleteList = document.querySelectorAll('.btn-delete');
+        btnDeleteList.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const productRow = event.target.closest('tr');
+                const productId = productRow.dataset.productId;
+                productRow.remove();
+                removeProductFromCart(productId);
+                updateTotal();
+            });
+        });
+
+        // Actualizar el total
+        function updateTotal() {
+            let total = 0;
+            const productItems = document.querySelectorAll('.product-item');
+            productItems.forEach(item => {
+                const price = parseFloat(item.querySelector('td:nth-child(5)').textContent.replace('$', ''));
+                const quantity = parseInt(item.querySelector('td:nth-child(4) span').textContent, 10);
+                const productTotal = price * quantity;
+                item.querySelector('.product-total').textContent = `$${productTotal.toFixed(2)}`;
+                total += productTotal;
+            });
+            document.querySelector('.carrito-total span').textContent = `Total: $${total.toFixed(2)}`;
+        }
+
+        // Eliminar producto del carrito en el backend
+        function removeProductFromCart(productId) {
+            fetch(`/remove_product/${productId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ productId })
+            });
+        }
+
+        // Validación del método de pago
+        const btnPagar = document.getElementById('btn-pagar');
+        btnPagar.addEventListener('click', () => {
+            const isPaymentMethodSelected = document.querySelector('input[name="pago"]:checked');
+            if (!isPaymentMethodSelected) {
+                alert("Por favor, selecciona un método de pago.");
+            } else {
+                // Proceder al pago (enviar el pago seleccionado)
+                // Aquí puedes redirigir o hacer lo necesario con el método de pago seleccionado
+                alert("Método de pago seleccionado, procediendo a la página de pago...");
+            }
+        });
+    });
+</script>
+{% endblock %}
