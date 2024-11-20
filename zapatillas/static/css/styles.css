@@ -4,11 +4,21 @@
     margin: 0;
     box-sizing: border-box;
 }
+.carousel {
+    position: relative;
+    z-index: 10;  /* Asegura que el carrusel no quede sobre el navbar */
+}
+@media (max-width: 768px) {
+    .carousel {
+        padding-top: 80px;  /* Ajusta este valor según la altura de tu navbar */
+    }
+}
+
 
 /* Body */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f4f9;
+    background-color: #b6f3eb;
 }
 /* Navbar Principal */
 .navbar-main {
@@ -17,6 +27,11 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     font-size: 18px;
     z-index: 1000;
+    
+}
+
+.navbar-nav a{
+    color: gold;
 }
 
 .navbar-main .navbar-brand img {
@@ -106,12 +121,103 @@ body {
 }
 
 .checkout-total {
-    margin-top: 20px;
+    margin-top: 2px;
     font-size: 1.2em;
     font-weight: bold;
+    text-align: center;
+}
+.checkout-products {
+    width: 100%; /* Ancho del contenido */
+    max-width: 800px; /* Limita el ancho máximo */
+    text-align: center; /* Centra el texto */
+}
+.checkout-products .table {
+    display: flex; /* Flexbox para centrar la tabla */
+    justify-content: center; /* Centra horizontalmente */
+    margin: 20px 0; /* Espaciado vertical */
+}
+table {
+    width: 80%; /* Ancho completo */
+    max-width: 1120px; /* Limita el ancho máximo */
+    border-collapse: collapse; /* Elimina los bordes duplicados */
+    background-color: #ffffff; /* Fondo blanco */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+    border-radius: 8px; /* Bordes redondeados */
+    overflow: hidden; /* Asegura que los bordes redondeados funcionen */
+}
+thead th,
+tbody td {
+    padding: 10px; /* Espaciado interno */
+    text-align: center; /* Centra el texto */
+    border-bottom: 1px solid #ddd; /* Borde inferior */
 }
 
-.payment-button {
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Fondo alternativo */
+}
+
+.checkout-total {
+    font-size: 1.5em; /* Tamaño del texto */
+    font-weight: bold; /* Texto en negrita */
+    margin: 20px 0; /* Espaciado vertical */
+    color: #333; /* Color del texto */
+}
+
+.checkout-container-metodopag {
+    display: flex; /* Flexbox */
+    flex-direction: column; /* Ordena los elementos en columna */
+    align-items: center; /* Centra horizontalmente */
+    margin-top: 30px; /* Espaciado superior */
+}
+
+form h3 {
+    text-align: center; /* Centra el título */
+    margin-bottom: 20px; /* Espaciado inferior */
+}
+
+form div {
+    margin-bottom: 10px; /* Espaciado inferior entre opciones */
+}
+
+button[type="submit"] {
+    background-color: #007bff; /* Fondo azul */
+    color: white; /* Texto blanco */
+    border: none; /* Sin bordes */
+    padding: 10px 20px; /* Espaciado interno */
+    font-size: 1em; /* Tamaño del texto */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor a pointer */
+    transition: background-color 0.3s ease; /* Efecto de transición */
+}
+button[type="submit"]:hover {
+    background-color: #0056b3; /* Fondo azul oscuro al pasar el mouse */
+}
+
+.btn-editar {
+    background-color: #33ff00; /* Fondo azul */
+    color: white; /* Texto blanco */
+    border: none; /* Sin bordes */
+    padding: 10px 20px; /* Espaciado interno */
+    font-size: 1em; /* Tamaño del texto */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor a pointer */
+    transition: background-color 0.3s ease; /* Efecto de transición */
+}
+.btn-editar:hover {
+    background-color: #17b639; /* Fondo azul oscuro al pasar el mouse */
+}
+
+
+.checkout-products h2{
+    text-align: center;
+    color: #0056b3;
+}
+
+.checkout-container div{
+padding-left: 20px;
+}
+
+.checkout-container-metodopag button {
     background-color: #28a745;
     color: white;
     border: none;
@@ -123,52 +229,10 @@ body {
     margin-top: 15px;
 }
 
-.payment-button:hover {
-    background-color: #218838;
-}
-
-/* Estilos para la fila de botones en el carrito */
-.action-buttons {
-    display: flex;
-    justify-content: space-between; /* Asegura que los botones estén en los extremos */
-    margin-top: 20px;
-}
-
-.btn-add-more,
-.btn-pagar {
-    width: 45%; /* Hacer los botones más pequeños */
-    padding: 10px;
+.checkout-container-metodopag h3{
     text-align: center;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
+    color: #0056b3;
 }
-
-.btn-add-more {
-    background-color: #4CAF50; /* Color de fondo verde */
-    color: white;
-}
-
-.btn-pagar {
-    background-color: #007BFF; /* Color de fondo azul */
-    color: white;
-}
-
-/* Asegurarse de que los botones se vean bien en pantallas pequeñas */
-@media (max-width: 600px) {
-    .action-buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .btn-add-more,
-    .btn-pagar {
-        width: 90%; /* Hacer los botones más grandes en pantallas pequeñas */
-        margin-bottom: 10px;
-    }
-}
-
 
 
 /* Navbar */
@@ -221,11 +285,7 @@ body {
     .navbar-logo {
         display: none;
     }
-    .footer-logo {
-        display: inline-block;
-        text-align: center;
-        margin-top: 15px;
-    }
+
     .container-cards {
         flex-direction: column; /* Apilar las tarjetas verticalmente */
         align-items: center;
@@ -317,17 +377,90 @@ body {
 }
 
 /* Product Table */
+.crud-table h2{
+    text-align: center;
+}
+
+.crud-header h2{
+    text-align: center;
+}
 .tabla-productos table {
     width: 100%;
     border-collapse: collapse;
+    display: flexbox;
+    margin-left: 20px;
 }
 
 .tabla-productos th,
 .tabla-productos td {
-    padding: 10px;
-    border: 1px solid #ccc;
-    text-align: left;
+    padding: 12px; /* Un poco más de espaciado dentro de las celdas */
+    border: 1px solid #ddd; /* Bordes más suaves */
+    text-align: center;
+    vertical-align: middle; /* Alineación vertical centrada */
+    background-color: #f9f9f9; /* Color de fondo claro para las celdas */
 }
+
+.tabla-productos th {
+    padding: 12px;
+    border: 1px solid #ddd;
+    background-color: #007bff; /* Fondo azul para las cabeceras */
+    color: white; /* Color del texto blanco */
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+/* Estilo para los botones de acción */
+.crud-table td .btn-editar, .crud-table td .btn-eliminar {
+    padding: 6px 12px; /* Hacer los botones más pequeños */
+    font-size: 14px; /* Reducir el tamaño de la fuente */
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px; /* Espacio entre los botones */
+}
+
+/* Estilo para el botón de editar */
+.btn-editar {
+    background-color: #007bff; /* Azul para el botón de editar */
+    color: white;
+}
+
+.btn-editar:hover {
+    background-color: #0056b3; /* Azul más oscuro al pasar el ratón */
+}
+
+/* Estilo para el botón de eliminar */
+.btn-eliminar {
+    background-color: #dc3545; /* Rojo para el botón de eliminar */
+    color: white;
+}
+
+.btn-eliminar:hover {
+    background-color: #c82333; /* Rojo más oscuro al pasar el ratón */
+}
+
+/* Alineación de los íconos dentro de los botones */
+.btn-editar i, .btn-eliminar i {
+    margin-right: 6px; /* Espacio entre el ícono y el texto */
+    font-size: 9px; /* Tamaño de los íconos */
+}
+
+/* Asegurarse de que los botones estén alineados horizontalmente */
+.crud-table td .btn-editar, .crud-table td .btn-eliminar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Eliminar el margen derecho en el último botón de la fila */
+.crud-table td .btn-eliminar:last-child {
+    margin-right: 0;
+}
+
+
 
 .tabla-productos th {
     background-color: #007bff;
@@ -476,6 +609,7 @@ body {
     color: #27ae60;
 }
 
+
 /* Botón de carrito */
 .cart-button {
     display: flex;
@@ -502,8 +636,10 @@ body {
 }
 
 
-
-/* estilos del pop up de carrito sin sesion iniciada*/
+.carrito-box h2{
+    text-align: center;
+    color: #0056b3;
+}
 
 /* Contenedor de mensajes */
 .alert-container {
@@ -538,14 +674,10 @@ body {
     transition: background-color 0.3s ease;
 }
 
-.alert-danger .btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
-}
 
 /* Estilos para el banner */
 .banner {
-    background-color: #ff4d4d;
+    background-color: #62e06c;
     color: white;
     text-align: center;
     padding: 10px;
@@ -565,11 +697,10 @@ body {
     color: #ffd700;
 }
 .navbar-main {
-    margin-top: 50px; /* Ajusta según el alto del banner */
+    margin-top: 40px; /* Ajusta según el alto del banner */
 }
 
 
-/*Estilos del chackout*/
 
 
 /* Navbar */
@@ -585,29 +716,128 @@ body {
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Main container (carrito-container or checkout-container) */
-.carrito-container, .checkout-container {
-    margin-top: 80px; /* Da espacio para que el navbar no se superponga */
-    padding: 20px;
-    max-width: 800px;
+/* Main container (carrito-container  */
+/* Contenedor principal */
+.carrito-container {
+    width: 100%; /* Ocupa el 100% del ancho disponible */
+    max-width: 1000px; /* Limita el ancho máximo en pantallas grandes */
     margin-left: auto;
-    margin-right: auto;
+    margin-right: auto; /* Centra el contenedor */
+    padding: 20px;
     background-color: #ffffff;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 8px rgba(28, 44, 180, 0.1); /* Sombras suaves */
     border-radius: 8px;
+    box-sizing: border-box; /* Incluye padding en el ancho total */
+    margin-top: 80px; /* Da espacio para el navbar */
 }
 
+/* Caja dentro del carrito */
+.carrito-box {
+    padding: 20px;
+    margin-bottom: 20px; /* Espacio entre cajas */
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(28, 44, 180, 0.1); /* Sombra para profundidad */
+}
+
+/* Asegura que las tablas no se desborden en pantallas pequeñas */
+.carrito-table-wrapper {
+    width: 100%;
+    overflow-x: auto; /* Permite desplazamiento horizontal */
+}
+
+/* Contenido de la tabla */
+.carrito-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.carrito-table th, .carrito-table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.carrito-table th {
+    background-color: #f4f4f4;
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+    .carrito-container {
+        padding: 15px; /* Reducir padding en pantallas pequeñas */
+    }
+
+    .carrito-box {
+        padding: 15px; /* Reducir padding de las cajas */
+    }
+
+    .carrito-table td, .carrito-table th {
+        font-size: 0.9rem;  /* Reducir tamaño de fuente en pantallas pequeñas */
+    }
+
+    .container-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .seguir-comprando, .btn-pagar {
+        width: 100%;
+        text-align: center;
+    }
+
+    .seguir-comprando a, .btn-pagar a {
+        display: block;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+
+    .product-quantity {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .quantity-input {
+        width: 50px;
+        text-align: center;
+    }
+
+    .carrito-total {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+}
+
+
+.checkout-container {
+    display: flex; /* Activa el modelo Flexbox */
+    flex-direction: column; /* Ordena los elementos en columna */
+    align-items: center; /* Alinea horizontalmente al centro */
+    justify-content: center; /* Alinea verticalmente al centro */
+    min-height: 50vh; /* Hace que ocupe toda la altura de la pantalla */
+    padding: 10px; /* Espaciado interno */
+    background-color: #f9f9f9; /* Fondo claro */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    border-radius: 8px; /* Bordes redondeados */
+    
+}
 /* General table styling */
 table {
-    width: 100%;
+    width: 50%;
     border-collapse: collapse;
     margin-bottom: 20px;
 }
 
 thead th, tbody td {
     padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+    text-align: center;
+    border-bottom: 1px solid #1d2ae2;
 }
 
 tbody tr:nth-child(even) {
@@ -618,27 +848,14 @@ tbody tr:nth-child(even) {
 .carrito-total, .checkout-total {
     font-size: 1.2em;
     font-weight: bold;
-    text-align: right;
+    text-align: center;
     margin-top: 20px;
+
 }
 
-/* Payment buttons */
-.btn-pagar, .payment-button {
-    width: 100%;
-    padding: 10px;
-    font-size: 1em;
-    color: #ffffff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: background-color 0.3s ease;
-}
 
-.btn-pagar:hover, .payment-button:hover {
-    background-color: #0056b3;
-}
+
+
 
 /* Flash messages */
 .flashes {
@@ -655,7 +872,7 @@ tbody tr:nth-child(even) {
 }
 
 /* Contenedor general para el carrito */
-.carrito-container {
+.carrito-container, .carrito-box {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -669,7 +886,7 @@ tbody tr:nth-child(even) {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(29, 6, 110, 0.1);
 }
 
 /* Estilo de la tabla del carrito */
@@ -705,14 +922,15 @@ tbody tr:nth-child(even) {
 /* Botones de acción */
 .action-buttons {
     display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    width: 100%;
+    flex-direction: row;
+   
+    gap: 2px;
+    width: 75%;
 }
 
 /* Estilos de los botones */
-.btn-add-more, .btn-pagar {
-    padding: 10px 20px;
+.seguir-comprando, .btn-pagar {
+    
     font-size: 1.1em;
     text-align: center;
     border: none;
@@ -720,17 +938,20 @@ tbody tr:nth-child(even) {
     cursor: pointer;
 }
 
-.btn-add-more {
-    background-color: #007bff;
-    color: white;
-    width: 40%;
+
+.container-buttons{
+    
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(253, 253, 253, 0.1);
+    display: flex;
+    flex-direction: row;
+    width: none;
+    
+
 }
 
-.btn-pagar {
-    background-color: #28a745;
-    color: white;
-    width: 40%;
-}
+
 
 /* Botón de eliminar producto */
 .btn-delete {
@@ -746,29 +967,82 @@ tbody tr:nth-child(even) {
     background-color: #c82333;
 }
 
+.container-buttons {
+    box-sizing: border-box;
+    padding: 30px;
+    margin: auto;
+    display: flex;             /* Activa el modelo Flexbox */    
+    align-items: center;       /* Alinea los botones verticalmente al centro */
+    flex-wrap: row wrap;
+    justify-content: space-around;
+    
+
+}
+
+
+
+.seguir-comprando:hover,
+.btn-pagar:hover {
+    background-color: #45a049; /* Color de fondo al hacer hover */
+}
+
+.container-buttons a {
+    text-decoration: none;         /* Elimina el subrayado de los enlaces */
+    color: white;                 /* Cambia el color del texto a blanco */
+    font-size: 18px;              /* Agranda el tamaño de la fuente */
+    padding: 10px 10px;           /* Agrega espaciado dentro del enlace */
+    border-radius: 5px;           /* Bordes redondeados */
+    text-align: center;           /* Alinea el texto al centro */
+    display: flex;        /* Hace que el enlace se comporte como un botón */
+    background-color: #4CAF50;    /* Fondo verde */
+}
+
+.container-buttons a:hover {
+    background-color: #45a049;    /* Cambia el fondo cuando el usuario pasa el mouse por encima */
+}
+
+
+
 /* Estilos generales para el contenedor de métodos de pago */
 .payment-methods {
-    margin: 20px 0;
+    background-color: #f9f9f9; /* Fondo claro */
+    padding: 20px; /* Espaciado interno */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+    max-width: 400px; /* Ancho máximo */
+    margin: 0 auto; /* Centrado en la página */
+    font-family: Arial, sans-serif; /* Fuente limpia */
 }
 
 .payment-methods h2 {
-    font-size: 1.8rem;
-    margin-bottom: 15px;
-    color: #333;
+    text-align: center; /* Centrado del texto */
+    font-size: 18px; /* Tamaño del texto */
+    margin-bottom: 20px; /* Espaciado inferior */
+    color: #333; /* Color oscuro para buena legibilidad */
 }
 
 /* Contenedor de cada opción de pago */
 .payment-option {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
+    display: flex; /* Flexbox para alinear contenido */
+    align-items: center; /* Centrar verticalmente */
+    gap: 10px; /* Espacio entre el ícono y el texto */
+    margin-bottom: 15px; /* Espaciado entre opciones */
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid #ddd; /* Borde gris claro */
+    border-radius: 8px; /* Bordes redondeados */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Efectos suaves */
+}
+.payment-option:hover {
+    background-color: #e9f5fc; /* Fondo azul claro */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Sombra más marcada */
 }
 
 .payment-label {
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
+    display: flex; /* Flexbox para alinear */
+    align-items: center; /* Centrar contenido */
+    gap: 10px; /* Espaciado entre elementos */
+    cursor: pointer; /* Cambia el cursor a pointer */
+    width: 100%; /* Toma el ancho completo */
 }
 
 .payment-label input[type="radio"] {
@@ -778,9 +1052,27 @@ tbody tr:nth-child(even) {
 
 /* Estilo para el logo de Mercado Pago */
 .payment-logo {
-    height: 30px;
-    width: auto;
-    margin-right: 10px;
+    width: 40px; /* Ancho fijo */
+    height: auto; /* Mantiene proporción */
+    object-fit: contain; /* Ajuste del contenido */
+}
+
+/* Estilo cuando está seleccionado */
+.payment-option input[type="radio"]:checked {
+    border-color: #007bff; /* Borde azul al seleccionar */
+    background-color: #007bff; /* Fondo azul */
+}
+
+/* Detalle del círculo interno al seleccionar */
+.payment-option input[type="radio"]:checked::before {
+    content: ''; /* Agrega contenido vacío */
+    position: absolute; /* Posición relativa al radio */
+    width: 8px; /* Tamaño interno */
+    height: 8px; /* Tamaño interno */
+    background-color: #fff; /* Color blanco */
+    border-radius: 50%; /* Círculo */
+    top: 4px; /* Centrado vertical */
+    left: 4px; /* Centrado horizontal */
 }
 
 /* Botones de acción */
@@ -790,34 +1082,355 @@ tbody tr:nth-child(even) {
     margin-top: 20px;
 }
 
-.btn-add-more,
-.btn-pagar {
-    padding: 12px 20px;
-    font-size: 1.2rem;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 48%;
-    text-align: center;
+/* Navbar responsive */
+@media (max-width: 768px) {
+    .navbar-main {
+        flex-direction: column;
+        text-align: center;
+        padding: 10px;
+    }
+    
+    .navbar-main .navbar-nav {
+        width: 100%;
+        text-align: center;
+    }
+
+    .navbar-main .d-flex {
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+
+    .navbar-main .d-flex a {
+        margin: 0;
+        font-size: 1.2rem;
+    }
+
+    /* Ocultar logo en pantallas pequeñas */
+    .navbar-logo {
+        display: none;
+    }
 }
 
-.btn-add-more {
-    background-color: #28a745;
+/* Contenedor de tarjetas responsivas */
+@media (max-width: 768px) {
+    .container-cards {
+        flex-direction: column;  /* Las tarjetas se apilan verticalmente */
+        align-items: center;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 90%;  /* Limita el ancho de las tarjetas */
+    }
+}
+
+/* Hacer que la tabla sea desplazable en pantallas pequeñas */
+@media (max-width: 768px) {
+    .checkout-products .table {
+        display: block;
+        overflow-x: auto;  /* Permite el desplazamiento horizontal */
+        width: 100%;
+    }
+
+    table {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+/* Ajustar botones de formulario */
+@media (max-width: 768px) {
+    .btn {
+        width: 100%;  /* Los botones ocupan todo el ancho */
+        margin: 10px 0;
+    }
+
+    .formulario-producto input, 
+    .formulario-producto textarea, 
+    .formulario-producto select {
+        width: 100%;  /* Los campos de formulario ocupan todo el ancho */
+    }
+}
+
+/* Ajuste de imagen en la tarjeta */
+@media (max-width: 768px) {
+    .image_container {
+        width: 100%;
+        max-width: 250px;  /* Ajusta el tamaño de la imagen */
+        height: 180px;
+    }
+
+    .image {
+        object-fit: cover;  /* Asegura que la imagen cubra el área sin distorsionarse */
+    }
+}
+
+/* Asegurar que el texto dentro de las tarjetas sea legible */
+@media (max-width: 768px) {
+    .truncate-text {
+        white-space: normal;  /* Deja que el texto se ajuste en lugar de cortarlo */
+    }
+    .title {
+        font-size: 1.1em;  /* Reducción del tamaño de fuente en pantallas pequeñas */
+    }
+}
+
+/* Estilo para el carrito en pantallas pequeñas */
+@media (max-width: 768px) {
+    .cart-button {
+        width: 100%;
+        margin-top: 10px;  /* Añadir espacio entre los botones */
+    }
+
+    .cart-icon {
+        width: 15px;  /* Ajustar el tamaño del ícono del carrito */
+        height: 15px;
+    }
+}
+
+/* Ajustar el contenedor de alertas en pantallas pequeñas */
+@media (max-width: 768px) {
+    .alert-container {
+        width: 90%;  /* Ajusta el ancho del contenedor */
+        padding: 10px;
+    }
+
+    .alert-danger {
+        font-size: 1em;
+        padding: 10px;
+    }
+}
+/* Contenedor de la tabla con desplazamiento horizontal en pantallas pequeñas */
+@media (max-width: 768px) {
+    .table-container {
+        width: 100%;
+        overflow-x: auto;  /* Permite desplazamiento horizontal */
+    }
+
+    /* Aseguramos que la tabla ocupe todo el ancho */
+    table {
+        width: 100%;
+        table-layout: auto;  /* Permite que las celdas se ajusten según el contenido */
+    }
+
+    /* Ajuste de las celdas para que no se desborden */
+    td, th {
+        word-wrap: break-word;  /* Permite que las palabras largas se dividan */
+        white-space: normal;    /* Permite que el texto se ajuste a varias líneas */
+    }
+    
+    /* Opcional: Reducción de los márgenes en pantallas pequeñas */
+    th, td {
+        padding: 8px;
+        font-size: 0.9rem;  /* Reducir tamaño de fuente en pantallas pequeñas */
+    }
+}
+
+/* Estilo general para la tabla en pantallas grandes */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+.btn-eliminar {
+    background-color: #dc3545; /* Rojo para el botón de eliminar */
     color: white;
-    text-decoration: none;
 }
 
-.btn-add-more:hover {
-    background-color: #218838;
+/* Estilos para el popup */
+#edit-popup {
+    display: none; /* Inicialmente oculto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
 }
 
-.btn-pagar {
+.popup-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.popup-content label {
+    font-weight: bold;
+    margin-bottom: 5px; /* Un pequeño margen para las etiquetas */
+}
+
+.popup-content input,
+.popup-content textarea,
+.popup-content select {
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    width: 100%;
+}
+.popup-content button.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.popup-content button {
     background-color: #007bff;
     color: white;
+    padding: 10px;
     border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-.btn-pagar:hover {
+.popup-content button:hover {
     background-color: #0056b3;
 }
 
+.tabla-productos td button {
+    margin-right: 10px; /* Espacio entre los botones */
+}
 
+.btn-editar {
+    background-color: #007bff; /* Color de fondo azul */
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-editar:hover {
+    background-color: #0056b3; /* Color más oscuro al pasar el ratón */
+}
+
+.btn-eliminar {
+    background-color: red; /* Color de fondo rojo */
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-eliminar:hover {
+    background-color: darkred; /* Color más oscuro al pasar el ratón */
+}
+
+
+
+
+/* Estilo para el botón de cierre */
+.close-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    color: #aaa;
+    cursor: pointer;
+    align-self: flex-end;
+}
+
+.close-btn:hover {
+    color: #555;
+}
+
+
+
+
+
+.pie-pagina{
+    width: 100%;
+    background-color: #0a1531c7;
+}
+.pie-pagina .grupo-1{
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 45px 0px;
+}
+.pie-pagina .grupo-1 .box figure{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pie-pagina .grupo-1 .box figure img{
+    width: 250px;
+}
+
+.pie-pagina .grupo-1 .box h2{
+    color: white;
+    margin-bottom: 25px;
+    font-size: 20px;
+
+}
+
+.pie-pagina .grupo-1 .box p{
+    color: #efefef;
+    margin-bottom: 10px;
+}
+
+.pie-pagina .grupo-1 .red-social a{
+    display: inline-block;
+    text-decoration: none;
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    color: white;
+    margin-right: 10px;
+    background-color: #0d2033;
+    text-align: center;
+    transition: all 300ms ease;
+}
+.pie-pagina .grupo-1 .red-social a :hover{
+    color: aqua;
+}
+.pie-pagina .grupo-2{
+    background-color: #0a1a2a;
+    padding: 15px 10px;
+    text-align: center;
+    color: #ffffff;
+}
+.pie-pagina .grupo-2 small{
+    font-size: 15px;
+}
+@media screen and (max-width:800px){
+    .pie-pagina .grupo-1{
+        width: 90%;
+        max-width: 1200px;
+        grid-template-columns: repeat(1, 1fr);
+        padding: 35px 0px;
+    }
+}
+h1{
+    text-align: center;
+    
+}
+p{
+    text-align: center;
+}

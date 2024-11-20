@@ -38,7 +38,7 @@ app.secret_key = secrets.token_hex(16)  # Genera una clave secreta única
 # Configura las opciones de la solicitud
 request_options = RequestOptions(access_token='MERCADO_PAGO_ACCESS_TOKEN')
 
-@app.route('/pagar', methods=['POST'])
+@app.route('/pagar', methods=['GET','POST'])
 def pagar():
     if 'carrito' not in session or len(session['carrito']) == 0:
         flash("El carrito está vacío.", "error")
@@ -85,7 +85,7 @@ def pagar():
             print(f"Error al procesar el pago: {e}")
             flash(f"Ocurrió un error al procesar el pago: {e}", "error")
             
-        
+
         return redirect(url_for('ver_carrito'))
 
     flash("Método de pago no válido.", "error")
@@ -138,53 +138,81 @@ def remove_product(product_id):
     return jsonify({"message": "Producto eliminado"}), 200
 
 
-@app.route('/checkout', methods=['[GET]','POST'])
+@app.route('/checkout', methods=['GET', 'POST'])
 def checkout():
     carrito = session.get('carrito', [])
     if not carrito:
+        flash("Tu carrito está vacío. Añade productos antes de continuar.", "error")
+        return redirect(url_for('index'))  # Si el carrito está vacío, redirige al index
+
+    # Calcular el total del carrito
+    total = sum(float(item['precio']) * int(item['cantidad']) for item in carrito)
+
+    if request.method == 'POST':
+        metodo_pago = request.form.get('pago')
+        if not metodo_pago:
+            flash("Por favor, selecciona un método de pago.", "error")
+            return redirect(url_for('checkout'))
+        
+        # Guarda el método de pago en la sesión para usarlo después
+        session['metodo_pago'] = metodo_pago
+
+        # Redirige a la ruta para procesar el pago
+        return redirect(url_for('procesar_pago'))
+
+    return render_template('checkout.html', carrito=carrito, total=total)
+
+@app.route('/procesar_pago', methods=['GET'])
+def procesar_pago():
+    metodo_pago = session.get('metodo_pago')
+    carrito = session.get('carrito', [])
+    if not carrito:
+        flash("Tu carrito está vacío. Añade productos antes de continuar.", "error")
         return redirect(url_for('index'))
 
-    preference_data = {
-        "item": []
-    }
+    if metodo_pago == 'mercado_pago':
+        # Preparamos los datos para la preferencia de pago
+        preference_data = {
+            "items": [
+                {
+                    "title": item['nombre'],
+                    "quantity": int(item['cantidad']),
+                    "unit_price": float(item['precio']),
+                    "currency_id": "ARS"
+                } for item in carrito
+            ],
+            "back_urls": {
+                "success": url_for('pago_exitoso', _external=True),
+                "failure": url_for('pago_fallido', _external=True),
+                "pending": url_for('pago_pendiente', _external=True)
+            },
+            "auto_return": "approved"
+        }
 
-    # Conexión a la base de datos para obtener los detalles de los productos
-    connection = get_db_connection()
-    cursor = connection.cursor(dictionary=True)
-
-    for product in carrito:
-        product_id = product.get('id')
-
+        # Creación de la preferencia de pago
         try:
-            product_id = int(product_id)  # Asegurarse de que sea un número entero
-        except ValueError:
-            print(f"Error: product_id no es un número válido: {product_id}")
-            continue
+            preference_response = sdk.preference().create(preference_data)
+            if preference_response['status'] == 201:
+                link_pago = preference_response["response"]["init_point"]
+                return redirect(link_pago)
+            else:
+                flash("Error al crear la preferencia de pago.", "error")
+                return redirect(url_for('checkout'))
+        except Exception as e:
+            print(f"Error al procesar el pago: {e}")
+            flash("Error interno al procesar el pago.", "error")
+            return redirect(url_for('checkout'))
 
-        cursor.execute("SELECT nombre, precio FROM productos WHERE ID_Producto = %s", (product_id,))
-        product_data = cursor.fetchone()
+    elif metodo_pago == 'tarjeta':
+        # Aquí puedes implementar la lógica para manejar el pago con tarjeta
+        flash("Pago con tarjeta no implementado aún.", "info")
+        return redirect(url_for('checkout'))
 
-        if product_data:
-            item = {
-                "title": product_data['nombre'],
-                "quantity": 1,
-                "unit_price": float(product_data['precio'])
-            }
-            preference_data["item"].append(item)
-
-    cursor.close()
-    connection.close()
-
-    # Crea la preferencia de pago con las opciones de solicitud
-    preference_response = sdk.preference().create(preference_data)
-
-    if preference_response['status'] == 200:
-        preference = preference_response["response"]
-        link_pago = preference["init_point"]
-        return redirect(link_pago)
     else:
-        return "Error al crear la preferencia de pago", 500
-    
+        flash("Método de pago no válido.", "error")
+        return redirect(url_for('checkout'))
+
+
 
 
 @app.route('/eliminar_producto/<int:producto_id>', methods=['POST'])
@@ -266,7 +294,58 @@ def pago_pendiente():
 
 
 
+@app.route('/editar_producto', methods=['POST'])
+def editar_producto():
+    if not session.get('is_admin'):
+        flash('No tienes permisos para realizar esta acción.', 'danger')
+        return redirect(url_for('dashboard'))
+    
+    # Obtener datos del formulario
+    product_id = request.form.get('ID_Producto')  # ID del producto
+    nombre = request.form.get('nombre')
+    descripcion = request.form.get('descripcion')
+    precio = request.form.get('precio')
+    stock = request.form.get('stock')
+    id_categoria = request.form.get('ID_Categoria')
+    talle = request.form.get('talle')
+    imagen = request.form.get('imagen')
+    
+    # Validación básica (opcional, pero útil para evitar datos incompletos)
+    if not all([product_id, nombre, descripcion, precio, stock, id_categoria, talle, imagen]):
+        flash('Todos los campos son obligatorios.', 'warning')
+        return redirect(url_for('dashboard'))
 
+    # Actualizar en la base de datos
+    try:
+        connection = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="",
+            database="almacen_calzado"
+        )
+        cursor = connection.cursor()
+
+        # Query para actualizar el producto
+        query = """
+            UPDATE productos
+            SET Nombre = %s, Descripcion = %s, Precio = %s, Stock = %s, ID_Categoria = %s, Talle = %s, Imagen = %s
+            WHERE ID_Producto = %s
+        """
+        cursor.execute(query, (nombre, descripcion, precio, stock, id_categoria, talle, imagen, product_id))
+
+        # Confirmar los cambios
+        connection.commit()
+
+        flash('Producto actualizado exitosamente.', 'success')
+    except mysql.connector.Error as err:
+        flash(f'Error al actualizar el producto: {err}', 'danger')
+    finally:
+        if cursor:
+            cursor.close()
+        if connection:
+            connection.close()
+
+    return redirect(url_for('dashboard'))
 
 
 # Registro de usuarios
@@ -341,7 +420,7 @@ def dashboard():
         id_categoria = request.form['ID_Categoria'] if not request.form.get('esDeTemporada') else "5"
         id_marca = request.form['id_marca']
         imagen = request.form['imagen']
-        es_de_temporada = request.form.get('esDeTemporada') == 'on'
+        es_de_temporada = 1 if request.form.get('esDeTemporada') == 'on' else 0
         talle = request.form['talle']
         
         conn = get_db_connection()
@@ -373,6 +452,7 @@ def dashboard():
     SELECT productos.*, categorias.Nombre AS Categoria
     FROM productos
     JOIN categorias ON productos.ID_Categoria = categorias.ID_Categoria
+    WHERE productos.esDeTemporada = 1 OR productos.esDeTemporada = 0
     '''
     cursor.execute(query_productos)
     productos = cursor.fetchall()
@@ -402,7 +482,7 @@ def buscar():
 # Productos por categoría
 @app.route('/productos/<categoria>')
 def productos_categoria(categoria):
-    categorias_ids = {'hombre': 1, 'mujer': 2, 'niño': 3, 'niña': 4}
+    categorias_ids = {'hombre': 1, 'mujer': 2, 'nino': 3, 'niña': 4, 'temporada': 5}
     id_categoria = categorias_ids.get(categoria.lower())
     
     if id_categoria:
@@ -433,7 +513,7 @@ def index():
 
     return render_template('index.html', productos_temporada=productos_temporada, productos_otros=productos_otros)
 
-# Ruta para agregar productos al carrito
+
 # Ruta para agregar productos al carrito
 @app.route('/agregar_al_carrito/<int:id>', methods=['POST'])
 def agregar_al_carrito(id):

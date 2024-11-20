@@ -40,40 +40,27 @@
 
         <!-- Total -->
         <div class="carrito-total">
-            <span><strong>Total: </strong>${{ total }}</span>
+            <span><strong>Total a abonar: </strong>${{ total }}</span>
         </div>
     </div>
 
-    <div class="payment-methods">
-        <h2>Seleccioná tu método de pago</h2>
     
-        <div class="payment-option">
-            <label for="mercado_pago" class="payment-label">
-                <input type="radio" name="pago" value="mercado_pago" id="mercado_pago">
-                <img src="/static/img/mplogo.png" alt="Mercado Pago" class="payment-logo">
-                
-            </label>
-        </div>
-        
-        <div class="payment-option">
-            <label for="tarjeta" class="payment-label">
-                <input type="radio" name="pago" value="tarjeta" id="tarjeta">
-                <img src="/static/img/tarjeta-bancaria.png" alt="Mercado Pago" class="payment-logo">
-                Tarjeta de Crédito/Débito(VISA/AMEX)
-            </label>
-        </div>
-    </div>
-    
-    <!-- Sección de botones y métodos de pago -->
-    <div class="payment-container">
-        <div class="action-buttons">
-            <a href="{{ url_for('index') }}" class="btn-add-more">Agregar más productos</a>
-            
-            <!-- Botón de proceder al pago -->
-            <button class="btn-pagar" id="btn-pagar">Proceder a pago</button>
-        </div>
-    </div>
-    
+</div>
+<br>
+<hr>
+<br>
+            <div class="container-buttons">
+                <!-- Botón de Seguir Comprando -->
+                <div class="seguir-comprando">
+                    <a href="{{ url_for('index') }}" >Seguir Comprando</a>
+                </div>
+
+                <!-- Botón para proceder al pago (Redirigir al checkout) -->
+                <div class="btn-pagar">
+                    <a href="{{ url_for('checkout') }}" >Proceder al pago</a>
+                </div>
+            </div>
+
 {% endblock %}
 
 {% block scripts %}
@@ -115,19 +102,6 @@
                 body: JSON.stringify({ productId })
             });
         }
-
-        // Validación del método de pago
-        const btnPagar = document.getElementById('btn-pagar');
-        btnPagar.addEventListener('click', () => {
-            const isPaymentMethodSelected = document.querySelector('input[name="pago"]:checked');
-            if (!isPaymentMethodSelected) {
-                alert("Por favor, selecciona un método de pago.");
-            } else {
-                // Proceder al pago (enviar el pago seleccionado)
-                // Aquí puedes redirigir o hacer lo necesario con el método de pago seleccionado
-                alert("Método de pago seleccionado, procediendo a la página de pago...");
-            }
-        });
     });
 </script>
 {% endblock %}
